@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import MaterialTableDemo from "./components/table";
+import LocationTiming from "./components/loactionTiming";
+import FormData from "./components/form";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { LocationProvider } from "./reducer/LocationState";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Switch>
+          <LocationProvider>
+            <Route path="/" exact component={MaterialTableDemo} />
+            <Route path="/addLocation" exact component={FormData} />
+            <Route path="/editLoaction/:id" exact component={FormData} />
+            <Route path="/locationTiming" exact component={LocationTiming} />
+          </LocationProvider>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
