@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useContext, useEffect } from "react";
-import { BrowserRouter as Router, Link, useHistory } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import { LocationContext } from "../reducer/LocationState";
 import {
   TextField,
@@ -8,13 +8,13 @@ import {
   Grid,
   Typography,
   makeStyles,
-} from "../utils";
+} from "../materialutils";
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    width: "50%",
-    height: "50%",
-    margin: "15em",
+    width: "auto",
+    height: "auto",
+    margin: "8em",
     marginRight: "15em",
     textSize: "1px",
   },
@@ -28,26 +28,21 @@ const useStyles = makeStyles((theme) => ({
         color: "red",
       },
     },
-    btn: {
-      // textSize: "1px"
-    },
   },
 }));
 
-const FormData = (props) => {
-  // console.log(props.match.params.id);
+const Location = () => {
   const history = useHistory();
   const { addLocation, editLocation, locationById } = useContext(
     LocationContext
   );
-  // console.log("locationById ", locationById);
+
   const [formData, updateFormData] = useState({});
   const [isEdit, setIsEdit] = useState(false);
 
   const handleFormDataChange = (e) => {
     updateFormData({
       ...formData,
-      // Trimming any whitespace
       [e.target.name]: e.target.value,
     });
   };
@@ -63,9 +58,8 @@ const FormData = (props) => {
   } = formData;
 
   const handleOnSubmit = (e) => {
+   
     e.preventDefault();
-    // console.log('e.target.elements ', e.target.value)
-    // console.log("formData ", formData);
     const formObj = {
       id: isEdit ? locationById?.id : Date.now(),
       locationName: locationName,
@@ -86,10 +80,8 @@ const FormData = (props) => {
   };
 
   useEffect(() => {
-    // call only when locationById state changes
     if (locationById != null) {
       updateFormData(locationById);
-      // change the button name from Submit to Update
       setIsEdit(true);
     }
   }, [locationById]);
@@ -99,7 +91,6 @@ const FormData = (props) => {
     <>
       <form
         className={classes.form}
-        noValidate
         autoComplete="off"
         onSubmit={handleOnSubmit}
       >
@@ -116,6 +107,7 @@ const FormData = (props) => {
                 id="standard-basic"
                 label="Location Name"
                 onChange={handleFormDataChange}
+                required
               />
             </Grid>
             <Grid item xs={3}>
@@ -126,6 +118,7 @@ const FormData = (props) => {
                 id="outlined-basic"
                 label="City"
                 onChange={handleFormDataChange}
+                required
               />
             </Grid>
             <Grid item xs={3}>
@@ -136,6 +129,7 @@ const FormData = (props) => {
                 id="outlined-basic"
                 label="State"
                 onChange={handleFormDataChange}
+                required
               />
             </Grid>
             <Grid item xs={3}>
@@ -146,6 +140,7 @@ const FormData = (props) => {
                 id="outlined-basic"
                 label="Zone Code"
                 onChange={handleFormDataChange}
+                required
               />
             </Grid>
             <Grid item xs={3}>
@@ -156,6 +151,7 @@ const FormData = (props) => {
                 id="outlined-basic"
                 label="Phone Number"
                 onChange={handleFormDataChange}
+                required
               />
             </Grid>
             <Grid item xs={6}>
@@ -166,17 +162,19 @@ const FormData = (props) => {
                 id="outlined-basic"
                 label="Time Zone"
                 onChange={handleFormDataChange}
+                required
               />
             </Grid>
 
             <Grid item xs={6}>
               <TextField
-                // value={appointmentPool}
+               value={appointmentPool}
                 name={"appointmentPool"}
                 variant="standard"
                 id="outlined-basic"
                 label="Appointment Pool"
                 onChange={handleFormDataChange}
+                required
               />
             </Grid>
             <Grid item xs={8}></Grid>
@@ -186,6 +184,7 @@ const FormData = (props) => {
                 className={classes.btn}
                 variant="contained"
                 color="secondary"
+                onClick={() => history.push('/')}
               >
                 Cancle
               </Button>
@@ -196,8 +195,9 @@ const FormData = (props) => {
                 type="submit"
                 variant="contained"
                 color="primary"
+                disabled={!formData}
               >
-                Save
+              {isEdit ? 'Update' : 'Save'}  
               </Button>
             </Grid>
           </Grid>
@@ -207,4 +207,4 @@ const FormData = (props) => {
   );
 };
 
-export default FormData;
+export default Location;

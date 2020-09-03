@@ -1,10 +1,9 @@
 import React from "react";
-import MaterialTableDemo from "./components/table";
-import LocationTiming from "./components/loactionTiming";
-import FormData from "./components/form";
-import "./App.css";
+import LocationList from "./components/LocationList";
+import Location from "./components/Location";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LocationProvider } from "./reducer/LocationState";
+import "./App.css";
 
 function App() {
   return (
@@ -12,10 +11,9 @@ function App() {
       <div>
         <Switch>
           <LocationProvider>
-            <Route path="/" exact component={MaterialTableDemo} />
-            <Route path="/addLocation" exact component={FormData} />
-            <Route path="/editLoaction/:id" exact component={FormData} />
-            <Route path="/locationTiming" exact component={LocationTiming} />
+            <Route path="/" exact component={LocationList} />
+            <Route path="/addLocation" exact component={Location} />
+            <Route path="/editLoaction/:id" exact component={Location} />
           </LocationProvider>
         </Switch>
       </div>

@@ -1,11 +1,12 @@
-import React, { useState, useCallback, useContext, useEffect } from "react";
+import React, {useContext } from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import EditIcon from "@material-ui/icons/Edit";
-import AddIcon from "@material-ui/icons/Add";
 import { useHistory } from 'react-router-dom';
+import {  Link } from "react-router-dom";
+import { LocationContext } from "../reducer/LocationState";
 import {
+  AddIcon,
+  DeleteOutlineIcon,
+  EditIcon,
   Table,
   TableBody,
   TableCell,
@@ -14,11 +15,10 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Paper,
   Button,
-} from "@material-ui/core";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import { LocationContext } from "../reducer/LocationState";
+  Paper,
+  makeStyles,
+} from "../materialutils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
